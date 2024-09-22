@@ -1,9 +1,10 @@
+import spacy
+import whisper
 from flask_ml.flask_ml_server import MLServer
 from flask_ml.flask_ml_server.constants import DataTypes
-from flask_ml.flask_ml_server.models import ResponseModel, TextResult, AudioResult
+from flask_ml.flask_ml_server.models import (AudioResult, ResponseModel,
+                                             TextResult)
 
-import whisper
-import spacy
 
 class AudioTranscription:
     def __init__(self) -> None:
@@ -13,8 +14,9 @@ class AudioTranscription:
         results = []
         for file in data:
             file_path = file.file_path
-            results.append(self.model.transcribe(file_path)['text'])
-        return results 
+            results.append(self.model.transcribe(file_path)["text"])
+        return results
+
 
 class NER:
     def __init__(self) -> None:
@@ -25,9 +27,12 @@ class NER:
         for i in range(len(data)):
             text = data[i].text
             ner_result = self.model(text)
-            entities_list = [{"word/token": word.text, "entity_type": word.label_} for word in ner_result.ents]
+            entities_list = [
+                {"word/token": word.text, "entity_type": word.label_}
+                for word in ner_result.ents
+            ]
             results.append(entities_list)
-        return results    
+        return results
 
 
 # create an instance of the model
@@ -42,9 +47,12 @@ server = MLServer(__name__)
 @server.route("/transcriptionmodel", DataTypes.AUDIO)
 def process_audio(inputs: list, parameters: dict) -> dict:
     results = AudioTranscriptionModel.predict(inputs)
-    results = [AudioResult(file_path=e.file_path, result=r) for e, r in zip(inputs, results)]
+    results = [
+        AudioResult(file_path=e.file_path, result=r) for e, r in zip(inputs, results)
+    ]
     response = ResponseModel(results=results)
     return response.get_response()
+
 
 @server.route("/nermodel", DataTypes.TEXT)
 def process_text(inputs: list, parameters: dict) -> dict:
@@ -53,7 +61,6 @@ def process_text(inputs: list, parameters: dict) -> dict:
     response = ResponseModel(results=results)
     return response.get_response()
 
+
 # Run the server (optional. You can also run the server using the command line)
 server.run()
-
-   
