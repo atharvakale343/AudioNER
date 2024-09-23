@@ -49,9 +49,9 @@ python src/audioNER/app_server.py
 Step 2: Test on audio files
 
 ```
-audioNER-cli --audio_files <audio_file_path>
+python src/audioNER/app_client.py --audio_files <audio_file_path>
 ``` 
-*Eg: audioNER-cli --audio_files data/audio.mp3 data/news.mp3*
+*Eg: python src/audioNER/app_client.py --audio_files data/georgewashington.mp3*
 
 
 

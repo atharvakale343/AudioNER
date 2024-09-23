@@ -30,17 +30,17 @@ def main():
         AUDIO_TRANSCRIPTION_MODEL_URL
     )  # Create an instance of the MLClient object
 
-    inputs = [
-        {"file_path": "data/audio.mp3"},
-        {"file_path": "data/news.mp3"},
-    ]  # The inputs to be sent to the server
+    # Get the audio file paths from CLI
+    args = get_args()
+
+    # Prepare the inputs dynamically from the CLI
+    inputs = [{"file_path": audio_file} for audio_file in args.audio_files]
+
     data_type = DataTypes.AUDIO  # The type of the input data
 
     audio_transcription_response = client.request(
         inputs, data_type
     )  # Send a request to the server
-    # print("Audio Transcription model response:")
-    # print(response)  # Print the response
 
     # NER MODEL
     client = MLClient(NER_MODEL_URL)  # Create an instance of the MLClient object
@@ -49,9 +49,8 @@ def main():
     data_type = DataTypes.TEXT  # The type of the input data
 
     ner_response = client.request(inputs, data_type)  # Send a request to the server
-    # print("NER model response:")
-    # print(response)  # Print the response
 
+    # Zip results from both responses to match filename to NER results
     no_of_files = len(audio_transcription_response)
     audio_ner_result = []
     for i in range(no_of_files):
