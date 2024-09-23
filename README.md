@@ -30,6 +30,7 @@ pip install -r requirements.txt
 ### Option 1: Test on sample audio files
 
 Execute the provided shell script to start the server and run the client.
+
 *Note: Please execute this in git bash if running on Windows.*
 ```
 ./audioNER-cli-sample.sh
