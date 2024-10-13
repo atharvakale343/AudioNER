@@ -1,5 +1,4 @@
 annotated-types==0.7.0
-audioNER @ file:///C:/ANJU/UMASS_MSCS/Projects/3_FALL2024/MLforChildRescue_569E/AudioNER
 black==24.8.0
 blinker==1.8.2
 blis==0.7.11
