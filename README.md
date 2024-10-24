@@ -1,4 +1,8 @@
-AudioNER helps users extract named entities from Audio files. Named entities include such as names of PERSONS, ORGANIZATIONS, LOCATIONS, FACILITIES like bridges or highways, LANGUAGE etc. (see full list on [SpaCy documentation](https://spacy.io/models/en#en_core_web_sm)):
+# Introduction
+
+AudioNER helps users extract named entities from Audio files. Named entities include such as names of PERSONS, ORGANIZATIONS, LOCATIONS, FACILITIES like bridges or highways, LANGUAGE etc. (see full list on [SpaCy documentation](https://spacy.io/models/en#en_core_web_sm))
+
+![](docs/cli-help.png)
 
 # Getting started
 
@@ -24,41 +28,46 @@ pip install -r requirements.txt
 ```
 **FFMPEG**: This project also requires the use of ffmpeg library for audio file processing. Install that using [this guideline](https://www.geeksforgeeks.org/how-to-install-ffmpeg-on-windows/) for Windows OS and [this guideline](https://phoenixnap.com/kb/ffmpeg-mac) for Mac OS.
 
+# Usage
 
-# Using Audio Named Entity Recognition
+## CLI
 
-### Option 1: Test on sample audio files
+Test using your audio files via CLI (command line interface)
 
-Execute the provided shell script to start the server and run the client.
-
-*Note: Please execute this in git bash if running on Windows.*
 ```
-./audioNER-cli-sample.sh
+python -m src.audioNER.app_cli --help
 ```
 
-### Option 2: Test using your audio files via CLI (command line interface)
+### Subcommand 1: Transcribe Audio Files
 
-Step 1: Start the server
+```
+python -m src.audioNER.app_cli transcription --audio_files data/georgewashington.mp3
+```
 
-Run the following command to start the server or backend of the application
+![](screenshots/transcription.png)
+
+
+### Subcommand 2: NER from a collection of text inputs
+
+```
+python -m src.audioNER.app_cli named_entity_recognition --audio_files data/georgewashington.mp3
+```
+
+![](screenshots/named_entity_recognition.png)
+
+### Subcommand 3: Transcribe Audio Files and NER
+
+```
+python -m src.audioNER.app_cli transcription_and_named_entity_recognition --audio_files data/georgewashington.mp3
+```
+
+![](screenshots/transcription_and_named_entity_recognition.png)
+
+
+## Server
+
+Start the server with:
 
 ```
 python src/audioNER/app_server.py
 ```
-
-Step 2: Test on audio files
-
-```
-python src/audioNER/app_client.py --audio_files <audio_file_path>
-``` 
-*Eg: python src/audioNER/app_client.py --audio_files data/georgewashington.mp3*
-
-
-
-
-
-
-
-
-
-
